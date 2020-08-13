@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:169614068336:android:bca4f22c95f5df822d42b5",
+        "mobilesdk_app_id": "1:169614068336:android:9fdec6d173a654012d42b5",
         "android_client_info": {
-          "package_name": "com.example.news"
+          "package_name": "com.timessquare.news"
         }
       },
       "oauth_client": [

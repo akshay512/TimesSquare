@@ -120,6 +120,7 @@ class About extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class InfoCard extends StatelessWidget {
   final String text;
   final IconData icon;

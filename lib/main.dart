@@ -1,10 +1,12 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 
+
 import 'package:news/screens/about.dart';
 import 'package:news/screens/cat_news.dart';
 import 'package:news/screens/homescreen.dart';
 import 'package:news/screens/intro.dart';
+
 
 
 
@@ -36,7 +38,7 @@ class _MyAppState extends State<MyApp> {
      
     return 
     MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Times Square',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -53,11 +55,11 @@ class _MyAppState extends State<MyApp> {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-       navigatorKey: GlobalKey(),
+       
        
       // Setup an observer that will save the current route into the saved state
 
-      
+      navigatorKey: GlobalKey(),
       home: OnBoardingPage(),
       routes: {
         '/Category_Screen': (ctx)=>CategoryNews(),

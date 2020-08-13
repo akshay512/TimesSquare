@@ -1,12 +1,14 @@
 import 'dart:convert';
-import 'dart:typed_data';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 import 'package:news/models/category_model.dart';
+
+import 'package:news/services/push_n.dart';
 
 import 'package:news/widgets/categorycard.dart';
 import 'package:http/http.dart' as http;
@@ -69,23 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool ishindi = false;
   bool isenglish = false;
   bool isloading = true;
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-  Future _showNotificationWithDefaultSound() async {
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High);
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await FlutterLocalNotificationsPlugin().show(
-      0,
-      'Hey ! Dont Forget to catch up on some news today!',
-      'Tap here to read some.',
-      platformChannelSpecifics,
-      payload: 'Default_Sound',
-    );
-  }
+  
+  
 
   fetchnews() async {
     var response = await http.get(
@@ -224,7 +211,7 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
               Center(
                 child: FlatButton(
                   onPressed: () => Share.share(
-                      'Hey! Check this news out  ' + data[i]['url']),
+                      'Hey! Check this news out by TimesSquare ' + data[i]['url']),
                   child: Icon(
                     Icons.share,
                     color: Colors.white,
@@ -239,24 +226,13 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   }
 
   
-  Future onSelectNotification(String payload) async {
-  
-          Navigator.of(context).pushNamed('/home_screen');
-      
-  }
+
 
   bool isSwitched = false;
   void initState() {
     super.initState();
     fetchnews();
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotification);
+    
     getdemostatus1();
   }
 
@@ -328,16 +304,16 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
                    Switch(
                     value: isSwitched,
                     onChanged: (value) async {
-                      setState(() {
+                      setState(() async {
                         getdemostatus(value);
                         print(value.toString());
                         if(value)
                         {
-                          _showDailyAtTime();
-                          _showDailyAtTime2();
+                         await  PushNotificationService().initialise();
+                         await PushNotificationService().fcmSubscribe();
                         }
                         else
-                         flutterLocalNotificationsPlugin.cancelAll();
+                        await PushNotificationService().fcmUnSubscribe();
                          isSwitched = value;
                       });
                     },
@@ -422,39 +398,9 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         ));
   }
 
-  Future<void> _showDailyAtTime() async {
-    var time = Time(9, 0, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'repeatDailyAtTime channel id',
-        'repeatDailyAtTime channel name',
-        'repeatDailyAtTime description');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Had Some News Today?',
-        'Tap here for some fresh hot headlines!',
-        time,
-        platformChannelSpecifics);
-  }
  
- Future<void> _showDailyAtTime2() async {
-    var time = Time(21, 0, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'repeatDailyAtTime channel id',
-        'repeatDailyAtTime channel name',
-        'repeatDailyAtTime description');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Had Some News Today?',
-        'Tap here for some fresh  headlines!',
-        time,
-        platformChannelSpecifics);
-  }
+ 
     
   
 }
+
