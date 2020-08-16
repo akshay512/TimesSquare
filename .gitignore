@@ -22,8 +22,8 @@
 
 # Flutter/Dart/Pub related
 **/android/key.properties
-**./key.jks
-**./xyzkeystore
+.key.jks
+.xyzkeystore
 **/doc/api/
 .dart_tool/
 .flutter-plugins
