@@ -1,3 +1,5 @@
+ 
+
 # Miscellaneous
 *.class
 *.log
@@ -9,7 +11,9 @@
 .history
 .svn/
 
+
 # IntelliJ related
+
 *.iml
 *.ipr
 *.iws
@@ -22,8 +26,6 @@
 
 # Flutter/Dart/Pub related
 **/android/key.properties
-key.jks
-xyzkeystore
 **/doc/api/
 .dart_tool/
 .flutter-plugins
