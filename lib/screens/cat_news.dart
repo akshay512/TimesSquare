@@ -36,7 +36,7 @@ class _CategoryNewsState extends State<CategoryNews> {
   else if(categoryName=='General')
    categoryName1='general';
     var response = await http.get(
-        categoryName=='Travel'|| categoryName=='Fashion' || categoryName=='Politics'?'https://newsapi.org/v2/everything?q=$categoryName&sortBy=popularity&pageSize=30&apiKey=5bdee0d2641c4e6092827ab728d8b9d3' :'https://newsapi.org/v2/top-headlines?country=in&category=$categoryName1&pageSize=30&apiKey=5bdee0d2641c4e6092827ab728d8b9d3');
+        categoryName=='Travel'|| categoryName=='Fashion' || categoryName=='Politics'?'https://newsapi.org/v2/everything?q=$categoryName&sortBy=popularity&pageSize=30&apiKey=5bdee0d2641c4e6092827ab728d8b9d3' :'https://newsapi.org/v2/top-headlines?country=in&category=$categoryName1&pageSize=30&apiKey=<Your api key>');
     setState(() {
       var converted = json.decode(response.body);
       data = converted['articles'];
